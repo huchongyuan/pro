@@ -4,13 +4,13 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:56:54
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-07 23:03:32
+ * @LastEditTime: 2021-03-10 10:35:41
 -->
 <template>
     <div id="login">
         <Form ref="loginForm" :model="loginForm" :label-width="80">
             <FormItem label="username" prop="username">
-                <Input type="username" v-model="loginForm.username"></Input>
+                <Input type="text" v-model="loginForm.username"></Input>
             </FormItem>
             <FormItem label="password" prop="password">
                 <Input type="password" v-model="loginForm.password"></Input>
