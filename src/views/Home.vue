@@ -4,10 +4,17 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-10 10:34:27
+ * @LastEditTime: 2021-03-11 16:10:55
 -->
 <template>
     <div id="Home">
-        首页
+        <router-view />
     </div>
 </template>
+
+<script>
+export default {
+  name: 'Home',
+};
+</script>
+

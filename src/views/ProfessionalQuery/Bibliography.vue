@@ -4,5 +4,15 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:34:13
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 14:34:25
+ * @LastEditTime: 2021-03-11 14:44:10
 -->
+<template>
+    <div>
+       参考文献
+    </div>
+</template>
+<script>
+export default {
+   name:"Bibliography"
+}
+</script>
