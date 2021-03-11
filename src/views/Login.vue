@@ -4,31 +4,32 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:56:54
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-10 10:35:41
+ * @LastEditTime: 2021-03-11 13:54:37
 -->
 <template>
     <div id="login">
         <Form ref="loginForm" :model="loginForm" :label-width="80">
-            <FormItem label="username" prop="username">
-                <Input type="text" v-model="loginForm.username"></Input>
+            <FormItem label="用户名" prop="userName">
+                <Input type="text" v-model="loginForm.userName"></Input>
             </FormItem>
-            <FormItem label="password" prop="password">
+            <FormItem label="密码" prop="password">
                 <Input type="password" v-model="loginForm.password"></Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('loginForm')">Submit</Button>
-                <Button @click="handleReset('loginForm')" style="margin-left: 8px">Reset</Button>
+                <Button type="primary" @click="handleSubmit('loginForm')">登录</Button>
+                <Button @click="handleReset('loginForm')" style="margin-left: 8px">重置</Button>
             </FormItem>
         </Form>
     </div>
 </template>
 <script>
+import LoginRequest  from '@/api/login';
 export default {
   name: 'Login',
   data() {
     return {
       loginForm: {
-        username: '',
+        userName: '',
         password: '',
       },
     };
@@ -37,9 +38,9 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$Message.success('Success!');
-        } else {
-          this.$Message.error('Fail!');
+          LoginRequest.submitLogin(this.loginForm).then(data=>{
+            console.log(data);
+          });
         }
       });
     },
@@ -49,3 +50,9 @@ export default {
   },
 };
 </script>
+<style lang="less">
+#login{
+  width:800px;
+  margin:50px auto 0 auto;
+}
+</style>

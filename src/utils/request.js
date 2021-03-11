@@ -4,20 +4,21 @@
  * @Author: huchongyuan
  * @Date: 2021-03-08 00:15:18
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-10 10:43:48
+ * @LastEditTime: 2021-03-11 13:53:53
  */
 import axios from 'axios';
+import qs from "qs";
 const service = axios.create({
-  baseURL: 'http://www.baidu.com',
+  baseURL: '',
   timeout: 1000 * 30, // 超时时间
   withCredentials: false, // 跨域请求是否需要凭证
   responseType: 'json',
   responseEncoding: 'utf8',
 });
 // 请求拦截(请求发出前处理请求)
-service.interceptors.request.use( config => {
-  config.method === 'POST' ? config.data = JSON.stringify({ ...config.data }) : config.params = { ...config.data };
-  config.headers['Content-Type'] = 'application/json';
+service.interceptors.request.use(config=> {
+  config.method === 'post' ? config.data = qs.stringify({ ...config.data }) : config.params = { ...config.data };
+  config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
   return config;
 }, (error) => {
   Promise.reject(error);
@@ -25,9 +26,9 @@ service.interceptors.request.use( config => {
 
 // 响应拦截
 service.interceptors.response.use((response) => {
-
+   return response.data;
 }, (error) => {
-
+  Promise.reject(error);
 });
 
 export default service;

@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: huchongyuan
+ * @Date: 2021-03-10 10:38:58
+ * @LastEditors: huchongyuan
+ * @LastEditTime: 2021-03-10 11:21:21
+ */
 module.exports = {
   root: true,
   env: {
@@ -5,7 +13,7 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
-    '@vue/airbnb',
+   // '@vue/airbnb',
   ],
   parserOptions: {
     parser: 'babel-eslint',
@@ -13,6 +21,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    "linebreak-style": [0 ,"error", "windows"]
   },
   overrides: [
     {
