@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-01 21:52:51
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 16:22:02
+ * @LastEditTime: 2021-03-11 16:25:15
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -126,7 +126,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
   },
 ];
 
