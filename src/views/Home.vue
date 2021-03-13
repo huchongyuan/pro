@@ -4,12 +4,13 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 17:49:01
+ * @LastEditTime: 2021-03-12 11:07:38
 -->
 <template>
     <div id="Home">
         <nav class="menuWrap">
           <div class="menuTitle">标准库数据查询系统</div>
+          <LeftMenu />
         </nav>
         <main>
           <header>右侧头部</header>
@@ -22,15 +23,19 @@
 </template>
 
 <script>
+import LeftMenu from '@/components/LeftMenu';
 export default {
   name: 'Home',
+  components:{
+    "LeftMenu":LeftMenu
+  }
 };
 </script>
 <style lang="less">
 #Home{
   width:100%;
   height:100%;
-  background-color: #ccc;
+  background-color: #fff;
   nav{
     width:200px;
     float:left;

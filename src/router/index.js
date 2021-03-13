@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-01 21:52:51
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 16:25:15
+ * @LastEditTime: 2021-03-12 11:20:36
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -29,7 +29,7 @@ const routes = [
         path: 'NormBaseQuery',
         name: 'NormBaseQuery',
         meta:{
-          title:"标准基础查询 "
+          title:"标准基础信息"
         },
         component: () => import(/* webpackChunkName: "NormBaseQuery" */ '../views/ProfessionalQuery/NormBaseQuery.vue')
       },
@@ -37,7 +37,7 @@ const routes = [
         path: 'NormAdvancedQuery',
         name: 'NormAdvancedQuery',
         meta:{
-          title:"标准高级查询"
+          title:"标准基础信息(高级查询)"
         },
         component: () => import(/* webpackChunkName: "NormAdvancedQuery" */ '../views/ProfessionalQuery/NormAdvancedQuery.vue')
       },
