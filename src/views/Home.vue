@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-12 11:07:38
+ * @LastEditTime: 2021-03-13 14:26:07
 -->
 <template>
     <div id="Home">
@@ -13,11 +13,17 @@
           <LeftMenu />
         </nav>
         <main>
-          <header>右侧头部</header>
-          <div>
-              <router-view />
+          <header>
+            <div class="loginOut">退出</div>
+          </header>
+          <div class="containerWrap">
+              <div class="container">
+                <div class="tabsWrap"></div>
+                <div class="view">
+                   <router-view />
+                </div>
+              </div>
           </div>
-          <footer>右侧底部</footer>
         </main>
     </div>
 </template>
@@ -54,6 +60,31 @@ export default {
     width:calc(100% - 200px);
     float:left;
     height:100%;
+    header{
+      height:50px;
+      background-color: rgba(0, 51, 102, 1);
+      .loginOut{
+        color:#fff;
+        width:100px;
+        height:50px;
+        line-height:50px;
+        float:right;
+        cursor: pointer;
+      }
+    }
+    .containerWrap{
+      width:100%;
+      height:calc(100% - 50px);
+      .container{
+        padding:10px;
+        .tabsWrap{
+          height:50px;
+        }
+        .view{
+          height:calc(100% - 50px);
+        }
+      }
+    }
   }
 }
 </style>
