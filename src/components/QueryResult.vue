@@ -4,19 +4,22 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 17:30:44
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-13 20:34:52
+ * @LastEditTime: 2021-03-15 22:46:04
 -->
 <template>
     <div>
-        <Table border></Table>
+        <Table 
+            border
+        ></Table>
         <div class="PageWrap">
             <Page 
                 :total="40" 
                 size="small" 
-                show-elevator 
+                show-elevator
+                show-total
                 show-sizer
-                on-change="PageChange" 
-                on-page-size-change="PageSizeChange" 
+                @on-change="PageChange" 
+                @on-page-size-change="PageSizeChange" 
             /> 
         </div>
     </div>
@@ -26,7 +29,10 @@ export default {
     name:"QueryResult",
     data(){
         return {
-           result:[]     
+           result:[],
+           queryParam:{} ,
+           pageSize:0,
+           pageNum:0   
         }
     },
     props:{
@@ -35,17 +41,27 @@ export default {
             default(){
                 return []
             }
+        },
+        queryFunc:{
+            type:Function,
+            default(){
+                return ()=>{}
+            }
         }
     },
     methods:{
-        query(){
-            
+        query(queryParam){
+           this.$set(this,'queryParam',queryParam);
+
         },
         // 翻页触发查询;
-        PageChange(){},
+        PageChange(pageNum){
+            console.log(pageNum)
+        },
         // 每页条数发生变化触发;
-        PageSizeChange(){}
-
+        PageSizeChange(pageSize){
+            console.log(pageSize)
+        }
     }
 }
 </script>
