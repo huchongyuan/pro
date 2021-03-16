@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 18:00:34
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-15 22:31:59
+ * @LastEditTime: 2021-03-16 11:11:30
 -->
 <template>
      <Form class="queryParam" ref="QueryParam" :model="normBaseQuery" label-position="right" :label-width="80" inline>
@@ -15,10 +15,8 @@
             <Input type="text" v-model="normBaseQuery.name" placeholder="标准名称"></Input>
         </FormItem>
         <FormItem prop="category" label="标准分类" style="width:186px;">
-            <Select v-model="normBaseQuery.category">
-                <Option value="1">旅游标准</Option>
-                <Option value="2">文化标准</Option>
-                <Option value="3">其他标准</Option>
+            <Select v-model="normBaseQuery.statusClass">
+                <Option v-for="opt in options" :value="opt.statusDesc" :key="opt.statusNo"></Option>
             </Select>
         </FormItem>
     </Form>
@@ -26,12 +24,21 @@
 <script>
 export default {
     name:"QueryParam",
+    computed:{
+        options:()=>{
+            if(sessionStorage.getItem("DD003")){
+                var result = JSON.parse(sessionStorage.getItem("DD003"));
+                return result;
+            }
+            return []
+        }
+    },
     data(){
         return {
             normBaseQuery:{
                 "code":"",
                 "name":"",
-                "category":""
+                "statusNo":""
             }
         }
     },

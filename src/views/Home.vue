@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-13 14:26:07
+ * @LastEditTime: 2021-03-16 10:58:22
 -->
 <template>
     <div id="Home">
@@ -30,6 +30,7 @@
 
 <script>
 import LeftMenu from '@/components/LeftMenu';
+import LoginRequest from '@/api/login';
 export default {
   name: 'Home',
   components:{

@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:56:54
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 13:54:37
+ * @LastEditTime: 2021-03-16 11:02:41
 -->
 <template>
     <div id="login">
@@ -39,7 +39,18 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           LoginRequest.submitLogin(this.loginForm).then(data=>{
-            console.log(data);
+            // 查询数据字典并且缓存到sessionStorage中;
+            LoginRequest.queryAllDis({}).then((resp)=>{
+              console.log(resp);
+              if(resp && resp.code ==="1000"){
+                var result = resp.body;
+                this.setSessionStorage("DD001",JSON.stringify(result["DD001"]));
+                this.setSessionStorage("DD002",JSON.stringify(result["DD002"]));
+                this.setSessionStorage("DD003",JSON.stringify(result["DD003"]));
+                this.setSessionStorage("DD004",JSON.stringify(result["DD004"]));
+                this.$router.push({"name":"IntegratedQuery"})
+              }
+            });
           });
         }
       });
@@ -47,6 +58,9 @@ export default {
     handleReset(name) {
       this.$refs[name].resetFields();
     },
+    setSessionStorage(key,value){
+      sessionStorage.setItem(key,value);
+    }
   },
 };
 </script>
