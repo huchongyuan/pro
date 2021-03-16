@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:15:50
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 13:24:06
+ * @LastEditTime: 2021-03-16 13:50:43
 -->
 <template>
    <div class="integratedQuery">
@@ -75,8 +75,14 @@ export default {
                      h('a', {
                            on: {
                               click: () => {
-                                 let {standName,standNo} = params.rows;
-                                // this.$router.push()
+                                 let {standName,standNo} = params.row;
+                                 this.$router.push({
+                                    "name":"NormBaseQuery",
+                                    "params":{
+                                       standName,
+                                       standNo
+                                    }
+                                 })
                               }
                            }
                         }, '查看详情')

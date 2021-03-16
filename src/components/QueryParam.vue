@@ -4,19 +4,19 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 18:00:34
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 11:11:30
+ * @LastEditTime: 2021-03-17 00:30:57
 -->
 <template>
      <Form class="queryParam" ref="QueryParam" :model="normBaseQuery" label-position="right" :label-width="80" inline>
-        <FormItem prop="code" label="标准号">
-            <Input type="text" v-model="normBaseQuery.code" placeholder="标准号"></Input>
+        <FormItem prop="standNo" label="标准号">
+            <Input type="text" v-model="normBaseQuery.standNo" placeholder="标准号"></Input>
         </FormItem>
-        <FormItem prop="name" label="标准名称">
-            <Input type="text" v-model="normBaseQuery.name" placeholder="标准名称"></Input>
+        <FormItem prop="standName" label="标准名称">
+            <Input type="text" v-model="normBaseQuery.standName" placeholder="标准名称"></Input>
         </FormItem>
         <FormItem prop="category" label="标准分类" style="width:186px;">
-            <Select v-model="normBaseQuery.statusClass">
-                <Option v-for="opt in options" :value="opt.statusDesc" :key="opt.statusNo"></Option>
+            <Select v-model="normBaseQuery.standClass">
+                <Option v-for="opt in options" :value="opt.statusNo" :key="opt.statusNo">{{opt.statusDesc}}</Option>
             </Select>
         </FormItem>
     </Form>
@@ -33,12 +33,15 @@ export default {
             return []
         }
     },
+    mounted(){
+         this.$set(this.normBaseQuery,'standClass',this.options[0]['statusNo']);
+    },
     data(){
         return {
             normBaseQuery:{
-                "code":"",
-                "name":"",
-                "statusNo":""
+                "standNo":"",
+                "standName":"",
+                "standClass":""
             }
         }
     },
@@ -47,12 +50,16 @@ export default {
             return this.normBaseQuery
         },
         setParam(normBaseQuery){
-           this.$set(this,'normBaseQuery',normBaseQuery); 
+           var newParam = {...this.normBaseQuery,...normBaseQuery};
+           this.$set(this,'normBaseQuery',newParam); 
         }
     }
 }
 </script>
 <style lang="less">
+.queryParam{
+    float:left;
+}
 .queryParam .ivu-form-item-content{
     width:186px;
 }

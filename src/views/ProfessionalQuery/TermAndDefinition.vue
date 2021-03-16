@@ -4,15 +4,88 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:18:26
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 14:27:49
+ * @LastEditTime: 2021-03-17 00:06:48
 -->
 <template>
-    <div>
-       术语和定义
+    <div class="TermAndDefinition">
+      <div class="TermAndDefinitionHeader">
+         <Form ref="formInline" label-position="right" :label-width="100" inline>
+            <QueryParam ref="QueryParam" />
+            <FormItem prop="term" label="术语和定义" class="last">
+               <Input type="text" v-model="term" placeholder="请输入术语和定义"></Input>
+            </FormItem>
+            <FormItem>
+               <Button type="primary" class="leftBtn" @click="query">查询</Button>
+            </FormItem>
+         </Form>
+      </div>
+      <div class="TermAndDefinitionContent">  
+         <QueryResult ref="QueryResult" :columns="columns" />
+      </div>
     </div>
 </template>
 <script>
+import QueryResult from '@/components/QueryResult';
+import QueryParam from '@/components/QueryParam';
+import TermAndDefinition from '@/api/TermAndDefinition';
 export default {
-   name:"TermAndDefinition"
+   name:"TermAndDefinition",
+    data(){
+      return {
+         "term":"",
+         "columns":[
+            {"title":"序号","key":"indexNo"},
+            {"title":"中文","key":"technicalTermName"},
+            {"title":"英文","key":"technicalTermEngName"},
+            {"title":"解释","key":"technicalTermDef"},
+            {"title":"标准编号","key":"standNo"},
+            {"title":"标准名称","key":"standName"},
+            {"title":"标准修订",
+               "render":(h, params) => {
+                  return h('div', [
+                     h('a', {
+                           on: {
+                              click: () => {
+                                 let {standName,standNo} = params.row;
+                              }
+                           }
+                        }, '标准修订')
+                     ]);
+               }
+            }
+         ]
+      }
+   },
+   mounted(){
+      if(this.$route.params.standName && this.$route.params.standNo){
+        let {standName,standNo} = this.$route.params;
+        this.$refs["QueryParam"].setParam({standName,standNo})
+      }
+   },
+   components:{
+      "QueryResult":QueryResult,
+      "QueryParam":QueryParam
+   },
+   methods:{
+      query(){
+         let queryParam = this.$refs["QueryParam"].getParam();
+         let term = this.term;
+         this.$refs["QueryResult"].query(TermAndDefinition.query,{term,...queryParam},true);
+      }
+   }
 }
 </script>
+<style lang="less">
+.TermAndDefinition{
+   .TermAndDefinitionHeader{
+      height:65px;
+      .ivu-form-item{
+         float:left;
+      }
+      .last.ivu-form-item{
+         margin-left:85px;
+         margin-right:0px;
+      }
+   }
+}
+</style>
