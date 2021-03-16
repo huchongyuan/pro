@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 17:30:44
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 13:13:27
+ * @LastEditTime: 2021-03-16 13:35:26
 -->
 <template>
     <div>
@@ -18,6 +18,7 @@
                 :total="total" 
                 size="small" 
                 show-elevator
+                :current="current"
                 show-total
                 show-sizer
                 @on-change="PageChange" 
@@ -48,24 +49,31 @@ export default {
         }
     },
     methods:{
-        query(queryMethod,queryParam){
+        query(queryMethod,queryParam,pageChange){
            this.$set(this,'queryParam',queryParam);
            this.$set(this,'queryMethod',queryMethod);
+           if(pageChange){
+                this.$set(this,"current",1);
+           }
            this.$nextTick(()=>{
                let current = this.current;
                let size = this.size;
-               var contidition = {...this.queryParam,current,size};
+               var contidition = {current,size,...this.queryParam};
                this.queryMethod(contidition).then((resp)=>{
-                    let {total,current,size,records} = resp.body;
-                    this.$set(this,"total",total);
-                    this.$set(this,"current",current);
-                    this.$set(this,"size",size);
-                    // 增加序号;
-                    let newRocords = records.map((item,index)=>{
-                        item["indexNo"]= index + 1;
-                        return item;
-                    })
-                    this.$set(this,"records",newRocords);
+                   if(resp && resp["code"] === "1000"){
+                       let {total,current,size,records} = resp.body;
+                       this.$nextTick(()=>{
+                            this.$set(this,"total",total);
+                            this.$set(this,"current",current);
+                            this.$set(this,"size",size);
+                            // 增加序号;
+                            let newRocords = records && records.map((item,index)=>{
+                                item["indexNo"]= index + 1;
+                                return item;
+                            })
+                            this.$set(this,"records",newRocords);
+                       });
+                   } 
                 })
            })
         },

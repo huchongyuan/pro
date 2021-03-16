@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:15:50
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 13:12:00
+ * @LastEditTime: 2021-03-16 13:24:06
 -->
 <template>
    <div class="integratedQuery">
@@ -94,7 +94,7 @@ export default {
    },
    methods:{
       handleSubmit(){
-         this.$refs["QueryResult"].query(IntegratedQuery.query,this.integratedQuery);
+         this.$refs["QueryResult"].query(IntegratedQuery.query,this.integratedQuery,true);
       }
    }
 }
