@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 10:58:22
+ * @LastEditTime: 2021-03-17 14:02:23
 -->
 <template>
     <div id="Home">
@@ -20,7 +20,9 @@
               <div class="container">
                 <div class="tabsWrap"></div>
                 <div class="view">
+                  <keep-alive>
                    <router-view />
+                  </keep-alive> 
                 </div>
               </div>
           </div>

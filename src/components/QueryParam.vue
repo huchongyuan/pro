@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 18:00:34
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 00:30:57
+ * @LastEditTime: 2021-03-17 14:34:55
 -->
 <template>
      <Form class="queryParam" ref="QueryParam" :model="normBaseQuery" label-position="right" :label-width="80" inline>
@@ -14,7 +14,7 @@
         <FormItem prop="standName" label="标准名称">
             <Input type="text" v-model="normBaseQuery.standName" placeholder="标准名称"></Input>
         </FormItem>
-        <FormItem prop="category" label="标准分类" style="width:186px;">
+        <FormItem prop="standClass" label="标准分类" style="width:186px;">
             <Select v-model="normBaseQuery.standClass">
                 <Option v-for="opt in options" :value="opt.statusNo" :key="opt.statusNo">{{opt.statusDesc}}</Option>
             </Select>

@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:16:16
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 12:59:23
+ * @LastEditTime: 2021-03-17 14:41:18
 -->
 <template>
    <div class="normBaseQuery">
@@ -81,14 +81,17 @@ export default {
             {"title":"标准类型","key":"classify"},
             {"title":"标准属性","key":"property"},
             {"title":"标准编号","key":"shortNo"},
-            {"title":"标准分类","key":"standClass"},
-            { "title":"标准修订",
+            {"title":"标准分类","key":"standClass","render":(h, params) => { let value = this.formatterVal(params,'standClass');return h('div',[h('span', {}, value)]);}},
+            {"title":"标准修订",
                "render":(h, params) => {
+                  let {table,tableId,standNo,standClass,standName} = params['row'];
                   return h('div', [
                      h('a', {
                            on: {
                               click: () => {
-                                  this.$refs["ModifyModal"].open();
+                                  this.$refs["ModifyModal"].open({
+                                     table,tableId,standNo,standClass,standName
+                                  });
                               }
                            }
                         }, '标准修订')
@@ -125,6 +128,11 @@ export default {
       // 跳转到高级查询;
       toUpperQuery(){
          
+      },
+      formatterVal(params,key){
+         let result = JSON.parse(sessionStorage.getItem("DD003"));
+         let row = params['row'];
+         return result.filter((item)=>{return item["statusNo"] == row[key]})[0]["statusDesc"];
       }
    }
 }

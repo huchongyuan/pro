@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 17:51:29
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-13 10:37:07
+ * @LastEditTime: 2021-03-17 13:50:27
 -->
 <template>
     <div class="leftMenu">
@@ -91,7 +91,6 @@ export default {
 </script>
 <style>
 .leftMenu{
-    padding-left:30px;
     height:calc(100% - 50px);
     background-color:#003366;
 }   
