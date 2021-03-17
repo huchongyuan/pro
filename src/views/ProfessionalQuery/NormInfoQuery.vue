@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:25:55
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-16 23:33:32
+ * @LastEditTime: 2021-03-17 12:23:36
 -->
 <template>
     <div class="normInfoQuery">
@@ -22,21 +22,53 @@
       <div class="normInfoQueryContent">  
          <QueryResult ref="QueryResult" :columns="columns" />
       </div>
+      <statisticsModal ref="statisticsModal" />
+      <PdfModal ref="PdfModal" />
     </div>
 </template>
 <script>
 import QueryResult from '@/components/QueryResult';
 import QueryParam from '@/components/QueryParam';
 import NormInfoQuery from '@/api/NormInfoQuery';
+import statisticsModal from '@/components/statisticsModal';
+import PdfModal from '@/components/PdfModal';
 export default {
    name:"NormInfoQuery",
    data(){
       return {
          "standDte":"",
-         "columns":[
-           
-            {"title":"标准号","key":"standNo"},
-            {"title":"标准名称","key":"standName"},
+         "columns":[     
+            {"title":"标准号","key":"standNo",
+               "render":(h, params) => {
+                  var value = params["row"]["standNo"]
+                  return h('div', [
+                     h('a', {
+                           on: {
+                              click: () => {
+                                 this.$refs["statisticsModal"].open({
+                                    "standNo":value
+                                 });
+                              }
+                           }
+                        }, value)
+                     ]);
+               }
+            },
+            {"title":"标准名称","key":"standName",
+               "render":(h, params) => {
+                  let value = params["row"]["standName"];
+                  let fjUrl = params["row"]["fjUrl"];
+                  return h('div', [
+                     h('a', {
+                           on: {
+                              click: () => {
+                                 this.$refs["PdfModal"].open(fjUrl);
+                              }
+                           }
+                        }, value)
+                     ]);
+               }
+            },
             {"title":"明细编号","key":"standDetNo"},
             {"title":"序号","key":"indexNo"},
             {"title":"明细内容","key":"standDet"},
@@ -64,7 +96,9 @@ export default {
    },
    components:{
       "QueryResult":QueryResult,
-      "QueryParam":QueryParam
+      "QueryParam":QueryParam,
+      "statisticsModal":statisticsModal,
+      "PdfModal":PdfModal
    },
    methods:{
       query(){

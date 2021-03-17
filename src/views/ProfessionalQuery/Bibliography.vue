@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:34:13
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 00:33:43
+ * @LastEditTime: 2021-03-17 12:20:51
 -->
 <template>
     <div class="Bibliography">
@@ -22,12 +22,16 @@
       <div class="BibliographyContent">  
          <QueryResult ref="QueryResult" :columns="columns" />
       </div>
+      <statisticsModal ref="statisticsModal" />
+      <PdfModal ref="PdfModal" />
     </div>
 </template>
 <script>
 import QueryResult from '@/components/QueryResult';
 import QueryParam from '@/components/QueryParam';
 import Bibliography from '@/api/Bibliography';
+import statisticsModal from '@/components/statisticsModal';
+import PdfModal from '@/components/PdfModal';
 export default {
    name:"Bibliography",
    data(){
@@ -37,8 +41,37 @@ export default {
             {"title":"参考文献序号","key":"indexNo"},
             {"title":"参考文献标准编号","key":"referenceNo"},
             {"title":"参考文献标准名称","key":"referenceName"},
-            {"title":"标准编号","key":"standNo"},
-            {"title":"标准名称","key":"standName"},
+            {"title":"标准号","key":"standNo",
+               "render":(h, params) => {
+                  var value = params["row"]["standNo"]
+                  return h('div', [
+                     h('a', {
+                           on: {
+                              click: () => {
+                                 this.$refs["statisticsModal"].open({
+                                    "standNo":value
+                                 });
+                              }
+                           }
+                        }, value)
+                     ]);
+               }
+            },
+            {"title":"标准名称","key":"standName",
+               "render":(h, params) => {
+                  let value = params["row"]["standName"];
+                  let fjUrl = params["row"]["fjUrl"];
+                  return h('div', [
+                     h('a', {
+                           on: {
+                              click: () => {
+                                 this.$refs["PdfModal"].open(fjUrl);
+                              }
+                           }
+                        }, value)
+                     ]);
+               }
+            },
             {"title":"标准修订",
                "render":(h, params) => {
                   return h('div', [
@@ -56,14 +89,22 @@ export default {
       }
    },
    mounted(){
-      if(this.$route.params.standName && this.$route.params.standNo){
-        let {standName,standNo} = this.$route.params;
-        this.$refs["QueryParam"].setParam({standName,standNo})
+      // 获取查询参数;
+      if(this.$route.params.standName){
+         let {standName} = this.$route.params;
+         this.$refs["QueryParam"].setParam({standName})
       }
+      if(this.$route.params.standNo){
+        let {standNo} = this.$route.params;
+        this.$refs["QueryParam"].setParam({standNo})
+      }
+      this.query();
    },
    components:{
       "QueryResult":QueryResult,
-      "QueryParam":QueryParam
+      "QueryParam":QueryParam,
+      "statisticsModal":statisticsModal,
+      "PdfModal":PdfModal
    },
    methods:{
       query(){
