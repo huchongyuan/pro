@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:16:16
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 12:08:13
+ * @LastEditTime: 2021-03-17 12:59:23
 -->
 <template>
    <div class="normBaseQuery">
@@ -22,6 +22,7 @@
       </div>
       <statisticsModal ref="statisticsModal" />
       <PdfModal ref="PdfModal" />
+      <ModifyModal ref="ModifyModal" />
    </div>
 </template>
 <script>
@@ -30,6 +31,7 @@ import QueryParam from '@/components/QueryParam';
 import NormBaseQuery from '@/api/NormBaseQuery';
 import statisticsModal from '@/components/statisticsModal';
 import PdfModal from '@/components/PdfModal';
+import ModifyModal from '@/components/ModifyModal';
 export default {
    name:"NormBaseQuery",
    data(){
@@ -86,17 +88,10 @@ export default {
                      h('a', {
                            on: {
                               click: () => {
-                                 let {standName,standNo} = params.row;
-                                 this.$router.push({
-                                    "name":"NormBaseQuery",
-                                    "params":{
-                                       standName,
-                                       standNo
-                                    }
-                                 })
+                                  this.$refs["ModifyModal"].open();
                               }
                            }
-                        }, '查看详情')
+                        }, '标准修订')
                      ]);
                }
             }
@@ -107,7 +102,8 @@ export default {
       "QueryResult":QueryResult,
       "QueryParam":QueryParam,
       "statisticsModal":statisticsModal,
-      "PdfModal":PdfModal
+      "PdfModal":PdfModal,
+      "ModifyModal":ModifyModal
    },
    mounted(){
       // 获取查询参数;

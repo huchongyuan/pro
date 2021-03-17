@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-17 10:39:36
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 11:01:27
+ * @LastEditTime: 2021-03-17 13:27:15
  */
 import service from '@/utils/request';
 
@@ -13,6 +13,18 @@ export default {
   queryStatic: (data) => service({
     method: 'get',
     url: '/api/bzysxt/standard/integrated/statistical',
+    data,
+  }),
+  // 查询修订历史 
+  queryModify:()=>service({
+    method: 'get',
+    url: '/api/bzysxt/standard/revise/page',
+    data,
+  }),
+  // 修订新增
+  modifyAdd:()=>service({
+    method: 'post',
+    url: '/api/bzysxt/standard/revise/save',
     data,
   })
 };
