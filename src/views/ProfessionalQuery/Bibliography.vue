@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:34:13
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 12:20:51
+ * @LastEditTime: 2021-03-17 16:32:28
 -->
 <template>
     <div class="Bibliography">
@@ -24,6 +24,7 @@
       </div>
       <statisticsModal ref="statisticsModal" />
       <PdfModal ref="PdfModal" />
+      <ModifyModal ref="ModifyModal" />
     </div>
 </template>
 <script>
@@ -32,6 +33,7 @@ import QueryParam from '@/components/QueryParam';
 import Bibliography from '@/api/Bibliography';
 import statisticsModal from '@/components/statisticsModal';
 import PdfModal from '@/components/PdfModal';
+import ModifyModal from '@/components/ModifyModal';
 export default {
    name:"Bibliography",
    data(){
@@ -74,11 +76,18 @@ export default {
             },
             {"title":"标准修订",
                "render":(h, params) => {
+                  let {table,tableId,standNo,standName,referenceName} = params['row'];
                   return h('div', [
                      h('a', {
                            on: {
                               click: () => {
-                                 let {standName,standNo} = params.row;
+                                 this.$refs["ModifyModal"].open({
+                                     "table":table,
+                                     "tableId":tableId,
+                                     "standNo":standNo,
+                                     "standName":standName,
+                                     "otherInfo":referenceName
+                                  });
                               }
                            }
                         }, '标准修订')
@@ -104,7 +113,8 @@ export default {
       "QueryResult":QueryResult,
       "QueryParam":QueryParam,
       "statisticsModal":statisticsModal,
-      "PdfModal":PdfModal
+      "PdfModal":PdfModal,
+      "ModifyModal":ModifyModal
    },
    methods:{
       query(){

@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-17 12:52:28
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:53:34
+ * @LastEditTime: 2021-03-17 16:16:45
 -->
 <template>
     <div class="ModifyModal">
@@ -17,8 +17,8 @@
                     <Input v-model="formItem.standName" readonly/>
                 </FormItem>
                 <!--下拉框-->
-                <FormItem label="修订内容" prop="standRevies">
-                    <Input v-model="formItem.standRevies" readonly />
+                <FormItem label="修订内容" prop="otherInfo">
+                    <Input v-model="formItem.otherInfo" readonly />
                 </FormItem>
                 <FormItem label="修订意见" prop="reviesCont">
                     <Input v-model="formItem.reviesCont" />
@@ -34,7 +34,7 @@
                         <Input v-model="formItem.reviseUser" />
                     </FormItem>
                     <FormItem label="提出日期" prop="reviesTime" class="right">
-                        <DatePicker type="datetime" v-model="formItem.reviesTime" style="width: 200px"></DatePicker>
+                        <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" v-model="formItem.reviesTime" style="width: 200px"></DatePicker>
                     </FormItem>
                 </div>
                 <FormItem>
@@ -62,7 +62,7 @@ export default {
                 table:"",
                 standNo:"",
                 standName:"",
-                standRevies:"",
+                otherInfo:"",
                 reviesCont:"",
                 reviesDesc:"",
                 reviesCor:"",
@@ -97,31 +97,48 @@ export default {
       
   },
   methods:{
-      //先查询
-      open(param){
-        let newFormItem = Object.assign(this.formItem,param);
-        this.$set(this,"formItem",newFormItem);
-        commonApi.queryModify({"tableId":param["tableId"]}).then((resp)=>{
-                if(resp && resp.code == "1000"){
-                    let result = resp.body.records.map((item,index)=>{
-                        item["indexNo"] = index+1;
-                        return item;
-                    });
-                    this.$set(this,'records',result);
+        //先查询
+        open(param){
+            let newFormItem = Object.assign(this.formItem,param);
+            this.$set(this,"formItem",newFormItem);
+            commonApi.queryModify({"tableId":param["tableId"]}).then((resp)=>{
+                    if(resp && resp.code == "1000"){
+                        let result = resp.body.records.map((item,index)=>{
+                            item["indexNo"] = index+1;
+                            return item;
+                        });
+                        this.$set(this,'records',result);
+                    }
+                    this.$set(this,"modalFlag",true); 
+            });
+        },
+        close(){
+            this.$refs['ModifyForm'].resetFields();
+            this.$set(this,"modalFlag",false); 
+        },
+        // 保存;
+        save(){
+            let reviesTime = this.formItem.reviesTime?this.formatDateTime(this.formItem.reviesTime):"";
+            commonApi.modifyAdd({...this.formItem,reviesTime}).then((resp)=>{
+                if(resp && resp["code"] =="1000"){
+                this.close(); 
                 }
-                this.$set(this,"modalFlag",true); 
-        });
-      },
-      close(){
-        this.$refs['ModifyForm'].resetFields();
-        this.$set(this,"modalFlag",false); 
-      },
-      // 保存;
-      save(){
-         commonApi.modifyAdd(this.formItem).then((resp)=>{
-             console.log(resp);
-         }) 
-      }
+            }) 
+        },
+        addZero(num){
+            return num < 10 ? '0' + num : num;
+        },
+        formatDateTime(date) {
+            const time = new Date(Date.parse(date));
+            time.setTime(time.setHours(time.getHours() + 8));
+            const Y = time.getFullYear() + '-';
+            const M = this.addZero(time.getMonth() + 1) + '-';
+            const D = this.addZero(time.getDate()) + ' ';
+            const h = this.addZero(time.getHours()) + ':';
+            const m = this.addZero(time.getMinutes()) + ':';
+            const s = this.addZero(time.getSeconds());
+            return Y + M + D + h + m + s;
+        }
   }
 }
 </script>

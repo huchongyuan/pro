@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-08 00:15:18
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-11 13:53:53
+ * @LastEditTime: 2021-03-17 15:06:29
  */
 import axios from 'axios';
 import qs from "qs";
@@ -17,8 +17,8 @@ const service = axios.create({
 });
 // 请求拦截(请求发出前处理请求)
 service.interceptors.request.use(config=> {
-  config.method === 'post' ? config.data = qs.stringify({ ...config.data }) : config.params = { ...config.data };
-  config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+  config.method === 'post' ? (config.data = config['contentType']?JSON.stringify({...config.data}):qs.stringify({ ...config.data })):config.params = { ...config.data };
+  config.headers['Content-Type'] = config['contentType']?config['contentType']:'application/x-www-form-urlencoded';
   return config;
 }, (error) => {
   Promise.reject(error);

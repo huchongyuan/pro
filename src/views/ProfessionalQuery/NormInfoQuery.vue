@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:25:55
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 12:23:36
+ * @LastEditTime: 2021-03-17 16:18:45
 -->
 <template>
     <div class="normInfoQuery">
@@ -24,6 +24,7 @@
       </div>
       <statisticsModal ref="statisticsModal" />
       <PdfModal ref="PdfModal" />
+      <ModifyModal ref="ModifyModal" />
     </div>
 </template>
 <script>
@@ -32,6 +33,7 @@ import QueryParam from '@/components/QueryParam';
 import NormInfoQuery from '@/api/NormInfoQuery';
 import statisticsModal from '@/components/statisticsModal';
 import PdfModal from '@/components/PdfModal';
+import ModifyModal from '@/components/ModifyModal';
 export default {
    name:"NormInfoQuery",
    data(){
@@ -74,11 +76,18 @@ export default {
             {"title":"明细内容","key":"standDet"},
             {"title":"提出修订意见",
                "render":(h, params) => {
+                   let {table,tableId,standNo,standName,standDet} = params['row'];
                   return h('div', [
                      h('a', {
                            on: {
                               click: () => {
-                                 let {standName,standNo} = params.row;
+                                 this.$refs["ModifyModal"].open({
+                                     "table":table,
+                                     "tableId":tableId,
+                                     "standNo":standNo,
+                                     "standName":standName,
+                                     "otherInfo":standDet
+                                  });
                               }
                            }
                         }, '提出修订意见')
@@ -89,16 +98,23 @@ export default {
       }
    },
    mounted(){
-      if(this.$route.params.standName && this.$route.params.standNo){
-        let {standName,standNo} = this.$route.params;
-        this.$refs["QueryParam"].setParam({standName,standNo})
+      // 获取查询参数;
+      if(this.$route.params.standName){
+         let {standName} = this.$route.params;
+         this.$refs["QueryParam"].setParam({standName})
       }
+      if(this.$route.params.standNo){
+        let {standNo} = this.$route.params;
+        this.$refs["QueryParam"].setParam({standNo})
+      }
+      this.query();
    },
    components:{
       "QueryResult":QueryResult,
       "QueryParam":QueryParam,
       "statisticsModal":statisticsModal,
-      "PdfModal":PdfModal
+      "PdfModal":PdfModal,
+      "ModifyModal":ModifyModal
    },
    methods:{
       query(){

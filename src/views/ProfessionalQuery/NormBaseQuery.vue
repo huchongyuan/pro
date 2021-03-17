@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:16:16
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:41:18
+ * @LastEditTime: 2021-03-17 16:13:08
 -->
 <template>
    <div class="normBaseQuery">
@@ -84,13 +84,17 @@ export default {
             {"title":"标准分类","key":"standClass","render":(h, params) => { let value = this.formatterVal(params,'standClass');return h('div',[h('span', {}, value)]);}},
             {"title":"标准修订",
                "render":(h, params) => {
-                  let {table,tableId,standNo,standClass,standName} = params['row'];
+                  let {table,tableId,standNo,standName} = params['row'];
                   return h('div', [
                      h('a', {
                            on: {
                               click: () => {
                                   this.$refs["ModifyModal"].open({
-                                     table,tableId,standNo,standClass,standName
+                                     "table":table,
+                                     "tableId":tableId,
+                                     "standNo":standNo,
+                                     "standName":standName,
+                                     "otherInfo":standName
                                   });
                               }
                            }

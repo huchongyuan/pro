@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-17 10:39:36
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:12:20
+ * @LastEditTime: 2021-03-17 14:59:32
  */
 import service from '@/utils/request';
 
@@ -23,6 +23,7 @@ export default {
   }),
   // 修订新增
   modifyAdd:(data)=>service({
+    contentType:"application/json",
     method: 'post',
     url: '/api/bzysxt/standard/revise/save',
     data,
