@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 17:51:29
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:00:59
+ * @LastEditTime: 2021-03-18 08:55:43
 -->
 <template>
     <div class="MenuItem" v-if="menus">
@@ -37,9 +37,7 @@ export default {
   },
   watch:{
     '$route.path':function(newVal,oldVal){
-        if(newVal !=oldVal ){
-             this.$set(this,"currentUrl",newVal)
-        }
+        this.$set(this,"currentUrl",newVal);
     }
   }
 }
