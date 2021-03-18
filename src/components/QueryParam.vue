@@ -4,15 +4,15 @@
  * @Author: huchongyuan
  * @Date: 2021-03-13 18:00:34
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:34:55
+ * @LastEditTime: 2021-03-18 14:40:34
 -->
 <template>
      <Form class="queryParam" ref="QueryParam" :model="normBaseQuery" label-position="right" :label-width="80" inline>
         <FormItem prop="standNo" label="标准号">
-            <Input type="text" v-model="normBaseQuery.standNo" placeholder="标准号"></Input>
+            <Input type="text" v-model="normBaseQuery.standNo" placeholder="标准号" />
         </FormItem>
         <FormItem prop="standName" label="标准名称">
-            <Input type="text" v-model="normBaseQuery.standName" placeholder="标准名称"></Input>
+            <Input type="text" v-model="normBaseQuery.standName" placeholder="标准名称" />
         </FormItem>
         <FormItem prop="standClass" label="标准分类" style="width:186px;">
             <Select v-model="normBaseQuery.standClass">

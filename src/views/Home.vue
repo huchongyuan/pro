@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-07 22:57:02
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 14:02:23
+ * @LastEditTime: 2021-03-18 14:38:45
 -->
 <template>
     <div id="Home">
@@ -78,6 +78,7 @@ export default {
     .containerWrap{
       width:100%;
       height:calc(100% - 50px);
+      overflow-y:auto;
       .container{
         padding:10px;
         .tabsWrap{
