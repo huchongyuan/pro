@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:16:16
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 16:13:08
+ * @LastEditTime: 2021-03-18 17:29:47
 -->
 <template>
    <div class="normBaseQuery">
@@ -131,7 +131,7 @@ export default {
       },
       // 跳转到高级查询;
       toUpperQuery(){
-         
+         this.$router.push({"name":"NormAdvancedQuery"});
       },
       formatterVal(params,key){
          let result = JSON.parse(sessionStorage.getItem("DD003"));

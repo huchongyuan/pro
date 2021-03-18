@@ -4,7 +4,7 @@
  * @Author: huchongyuan
  * @Date: 2021-03-11 14:31:01
  * @LastEditors: huchongyuan
- * @LastEditTime: 2021-03-17 16:28:15
+ * @LastEditTime: 2021-03-18 17:31:21
 -->
 <template>
     <div class="Rapporteur">
@@ -16,7 +16,7 @@
             </FormItem>
             <FormItem>
                <Button type="primary" class="leftBtn" @click="query">查询</Button>
-               <Button type="primary" @click="query">高级查询</Button>
+               <Button type="primary" @click="toUpperQuery">高级查询</Button>
             </FormItem>
          </Form>
       </div>
@@ -121,7 +121,11 @@ export default {
          let queryParam = this.$refs["QueryParam"].getParam();
          let term = this.term;
          this.$refs["QueryResult"].query(Rapporteur.query,{term,...queryParam},true);
-      }
+      },
+      // 跳转到高级查询;
+      toUpperQuery(){
+         this.$router.push({"name":"RapporteurAdvanced"});
+      },
    }
 }
 </script>
